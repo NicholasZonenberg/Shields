@@ -27,6 +27,11 @@
     <fd.settings.shield.scale-heat.label>Scale damage by shield heat</fd.settings.shield.scale-heat.label>
     <fd.settings.shield.scale-heat.description>Blocking damage requires less power when cold and a lot more power when hot. Also using Centralized Climate Control mod is recommended when using this</fd.settings.shield.scale-heat.description>
 
+    <!-- Color section -->
+    <fd.settings.shield.color>Color</fd.settings.shield.color>
+    <fd.settings.shield.enable>Enable Fancy Shield Texturing</fd.settings.shield.enable>
+    <fd.settings.shield.secondarycolor>Enable Shield Secondary Colouring</fd.settings.shield.secondarycolor>
+
     <!-- Power section -->
     <fd.settings.shield.power.heading>Power</fd.settings.shield.power.heading>
 
