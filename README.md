@@ -68,7 +68,6 @@ enter via drop pods in shielded areas.
 ## Mods supported:
 - Crash Landing: Blocks crashing ship parts
 - Centralized Climate Control: Cool shields with pipes
-- RedistHeat: Cool shields with duct work
 
 ## Contributions
 
