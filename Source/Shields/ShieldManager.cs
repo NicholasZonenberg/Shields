@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -14,6 +14,10 @@ namespace FrontierDevelopments.Shields
 
         private readonly HashSet<IShield> _shields = new HashSet<IShield>();
 
+        public int ShieldCount ()
+        {
+            return _shields.Count;
+        }
         public void Add(IShield shield)
         {
             _shields.Add(shield);
@@ -27,16 +31,16 @@ namespace FrontierDevelopments.Shields
         private IEnumerable<IShield> Shields => _shields;
 
         public Vector3? Block(
-            Vector3 origin, 
-            Ray ray, 
+            Vector3 origin,
+            Ray ray,
             float limit,
             long damage)
         {
             try
             {
-                foreach(var shield in Shields)
+                foreach (var shield in Shields)
                 {
-                    if(shield == null || !shield.IsActive() || Mod.Settings.EnableShootingOut && shield.Collision(origin)) continue;
+                    if (shield == null || !shield.IsActive() || Mod.Settings.EnableShootingOut && shield.Collision(origin)) continue;
                     var point = shield.Collision(ray, limit);
                     if (point != null && !ShouldPassThrough(shield, point.Value) && shield.Block(damage, point.Value) >= damage)
                     {
@@ -44,7 +48,7 @@ namespace FrontierDevelopments.Shields
                     }
                 }
             }
-            catch (KeyNotFoundException) {}
+            catch (KeyNotFoundException) { }
             return null;
         }
 
@@ -61,7 +65,7 @@ namespace FrontierDevelopments.Shields
             }
             return false;
         }
-        
+
         public Vector3? Block(
             Vector3 origin,
             Vector3 position,
@@ -70,9 +74,9 @@ namespace FrontierDevelopments.Shields
         {
             try
             {
-                foreach(var shield in Shields)
+                foreach (var shield in Shields)
                 {
-                    if(shield == null || !shield.IsActive() || ShouldPassThrough(shield, position) || Mod.Settings.EnableShootingOut && shield.Collision(origin)) continue;
+                    if (shield == null || !shield.IsActive() || ShouldPassThrough(shield, position) || Mod.Settings.EnableShootingOut && shield.Collision(origin)) continue;
                     var point = shield.Collision(position, end);
                     if (point != null && shield.Block(damage, point.Value) >= damage)
                     {
@@ -80,10 +84,10 @@ namespace FrontierDevelopments.Shields
                     }
                 }
             }
-            catch (KeyNotFoundException) {}
+            catch (KeyNotFoundException) { }
             return null;
         }
-        
+
         public Vector3? Block(
             Vector3 origin,
             Vector3 position,
@@ -92,9 +96,9 @@ namespace FrontierDevelopments.Shields
         {
             try
             {
-                foreach(var shield in Shields)
+                foreach (var shield in Shields)
                 {
-                    if(shield == null || !shield.IsActive() || ShouldPassThrough(shield, position) || Mod.Settings.EnableShootingOut && shield.Collision(origin)) continue;
+                    if (shield == null || !shield.IsActive() || ShouldPassThrough(shield, position) || Mod.Settings.EnableShootingOut && shield.Collision(origin)) continue;
                     var point = shield.Collision(position, end);
                     if (point != null && shield.Block(damages, point.Value) >= damages.Damage)
                     {
@@ -102,15 +106,15 @@ namespace FrontierDevelopments.Shields
                     }
                 }
             }
-            catch (KeyNotFoundException) {}
+            catch (KeyNotFoundException) { }
             return null;
         }
 
         public IEnumerable<IShield> WhichShielded(Vector3 start, Vector3 end, Faction friendly = null)
         {
-            foreach(var shield in Shields)
+            foreach (var shield in Shields)
             {
-                if(shield == null || !shield.IsActive() || Mod.Settings.EnableShootingOut && shield.Collision(start)) continue;
+                if (shield == null || !shield.IsActive() || Mod.Settings.EnableShootingOut && shield.Collision(start)) continue;
                 if (friendly != null && shield.Faction != friendly) continue;
                 var position = shield.Collision(start, end);
                 if (position != null && !ShouldPassThrough(shield, position.Value))
@@ -119,7 +123,7 @@ namespace FrontierDevelopments.Shields
                 }
             }
         }
-        
+
         public bool Shielded(Vector3 start, Vector3 end, Faction friendly = null)
         {
             return WhichShielded(start, end, friendly).Any();
@@ -131,12 +135,12 @@ namespace FrontierDevelopments.Shields
                 .Where(shield => !active || shield.IsActive())
                 .Where(shield => shield.Collision(position));
         }
-        
+
         public bool Shielded(Vector3 position, bool active = true)
         {
             return WhichShielded(position, active).Any();
         }
-        
+
         public bool Block(Vector3 position, long damage)
         {
             try
@@ -152,10 +156,10 @@ namespace FrontierDevelopments.Shields
                     }
                 }
             }
-            catch (KeyNotFoundException) {}
+            catch (KeyNotFoundException) { }
             return false;
         }
-        
+
         public bool Block(Vector3 origin, Vector3 position, long damage)
         {
             try
@@ -172,10 +176,10 @@ namespace FrontierDevelopments.Shields
                     }
                 }
             }
-            catch (KeyNotFoundException) {}
+            catch (KeyNotFoundException) { }
             return false;
         }
-        
+
         public bool Block(Vector3 origin, Vector3 position, ShieldDamages damages)
         {
             try
@@ -192,7 +196,7 @@ namespace FrontierDevelopments.Shields
                     }
                 }
             }
-            catch (KeyNotFoundException) {}
+            catch (KeyNotFoundException) { }
             return false;
         }
 
